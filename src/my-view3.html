@@ -12,26 +12,104 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 
 <dom-module id="my-view3">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+				background-color: #FF9C47;
+				height: 100%;
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+			}
+			
+			div .spinner .checked {
+				display: block;
+			}
+			
+			div .spinner {
+				display: none;
+			}
+			
+			.loader,
+			.loader:before,
+			.loader:after {
+				background: #ffffff;
+				-webkit-animation: load1 1s infinite ease-in-out;
+				animation: load1 1s infinite ease-in-out;
+				width: 1em;
+				height: 4em;
+			}
+			
+			.loader:before,
+			.loader:after {
+				position: absolute;
+				top: 0;
+				content: '';
+			}
+			
+			.loader:before {
+				left: -1.5em;
+				-webkit-animation-delay: -0.32s;
+				animation-delay: -0.32s;
+			}
+			
+			.loader {
+				color: #ffffff;
+				text-indent: -9999em;
+				margin: 88px auto;
+				position: relative;
+				font-size: 11px;
+				-webkit-transform: translateZ(0);
+				-ms-transform: translateZ(0);
+				transform: translateZ(0);
+				-webkit-animation-delay: -0.16s;
+				animation-delay: -0.16s;
+			}
+			
+			.loader:after {
+				left: 1.5em;
+			}
+			
+			@-webkit-keyframes load1 {
+				0%,
+				80%,
+				100% {
+					box-shadow: 0 0;
+					height: 4em;
+				}
+				40% {
+					box-shadow: 0 -2em;
+					height: 5em;
+				}
+			}
+			
+			@keyframes load1 {
+				0%,
+				80%,
+				100% {
+					box-shadow: 0 0;
+					height: 4em;
+				}
+				40% {
+					box-shadow: 0 -2em;
+					height: 5em;
+				}
+			}
+		</style>
 
-        padding: 10px;
-      }
-    </style>
+		<div class="spinner checked">
+			<div class="loader">Loading...</div>
+		</div>
+	</template>
 
-    <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
-    </div>
-  </template>
-
-  <script>
+	<script>
     Polymer({
-      is: 'my-view3'
+      is: 'my-view3',
+
+      ready: function() {
+        this.fire('view3loaded');
+      }
     });
   </script>
 </dom-module>

@@ -32,7 +32,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 			
 			#center-holder {
         text-align: center;
-				width: 600px;
+				width: 80%;
 			}
 
       facebook-login {
@@ -50,11 +50,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<script>
     Polymer({
       is: 'my-view1',
+
       tapped: function(e, detail) {
-        FB.login();
+        var authtoken;
+        var event = e;
+        FB.login(function(response){
+          if(response.status === 'connected') {
+            //console.log(response);
+            //console.log(response.authResponse.accessToken);
+            authtoken = response.authResponse.accessToken;
+            console.log(authtoken);
+            event.target.fire('facelogIn',{token: authtoken});
+            //_authSaver(response.authResponse.accessToken);
+            document.location.href = '/view2'
+          }
+        });
       },
 
-      created: function(e) {
+      attached: function() {
+        this.listen(this.$.facebookApi,'ready','_loginCheck');
+      },
+
+      _loginCheck: function(e) {
+        FB.getLoginStatus(function(response) {
+          console.log('Login Checked');
+          console.log(response)
+          if(response.status === 'connected') {
+            document.location.href = '/view2'
+          }
+        });
       }
 
     });

@@ -10,28 +10,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 
 <dom-module id="my-view2">
   <template>
     <style include="shared-styles">
       :host {
         display: block;
+				background-color: #FF9C47;
+				height: 100%;
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+      }
 
-        padding: 10px;
+      .center {
+        text-align: center;
+				width: 80%;
       }
     </style>
 
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
+    <div class="card center">
+      <h2>Please Enter Your ZipCode or Address in order to Determine Election Candidates</h2>
+      <paper-input label="Zip Code/Address" placeholder="77479" id="zipinput"></paper-input>
+      <paper-button raised on-tap="zipSubmit">Submit</paper-button>
     </div>
   </template>
 
   <script>
     Polymer({
-      is: 'my-view2'
+      is: 'my-view2',
+
+      zipSubmit: function(e) {
+        this.fire('ziprecieved',{loc: this.$.zipinput.value});
+        document.location.href = '/view3';
+      }
     });
   </script>
 </dom-module>

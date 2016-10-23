@@ -54,30 +54,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: String,
           reflectToAttribute: true,
           observer: '_pageChanged'
+        },
+
+        authtoken: {
+          type: String
+        },
+
+        zipCode: {
+          type: String
         }
       },
 
       observers: [
-        '_routePageChanged(routeData.page)',
-        '_facebookData(res)'
+        '_routePageChanged(routeData.page)'
       ],
 
       ready: function() {
-        //this.listen(this.$.view1, 'facetap', '_logInFacebook');        
-      },
-
-      _logInFacebook: function(e) {
-        console.log('Button Pressed');
-        console.log(this.$.facebookApi);
+        this.listen(this,'facelogIn','_setToken');
+        this.listen(this, 'ziprecieved', '_setZip');
+        this.listen(this, 'view3loaded', '_asyncLoadData'); 
       },
 
       _routePageChanged: function(page) {
         this.page = page || 'view1';
       },
 
-      _facebookData: function(res) {
-        console.log(res.name);
-        console.log(res.email);
+      _setToken: function(e) {
+        this.authtoken = e.detail.token;
+      },
+
+      _setZip: function(e) {
+        this.zipCode = e.detail.loc;
+      },
+
+      _asyncLoadData: function(e) {
+        var deminfo = new XMLHttpRequest();
+        deminfo.addEventListener('load', function() {
+
+        });
+        deminfo.responseType = 'json'
+        
       },
 
       _pageChanged: function(page) {
