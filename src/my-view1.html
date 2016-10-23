@@ -1,0 +1,62 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="my-view1">
+	<template>
+		<style include="shared-styles">
+			:host {
+				display: block;
+				background-color: #FF9C47;
+				height: 100%;
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+			}
+
+      paper-button {
+        background: #3B5998;
+        color: white;
+      }
+			
+			#center-holder {
+        text-align: center;
+				width: 600px;
+			}
+
+      facebook-login {
+        display: none;
+      }
+		</style>
+		<div id="center-holder" class="card">
+			<h2>Ballot Baker</h2>
+      <p>Login in below to find that candidates aligned to your inner chi for this year's ballot</p>
+      <paper-button raised on-tap="tapped">Facebook</paper-button>
+      <facebook-login id="facebookApi" appID="329924944039658" graph-url="me?fields=name,email.birthday" scope="email user_about_me user_birthday user_education_history user_hometown user_likes user_location user_posts user_religion_politics user_relationships user_relationship_details user_status user_work_history" graph-response="{{resp}}" auto-api-call></facebook-login>
+		</div>
+	</template>
+
+	<script>
+    Polymer({
+      is: 'my-view1',
+      tapped: function(e, detail) {
+        FB.login();
+      },
+
+      created: function(e) {
+      }
+
+    });
+  </script>
+</dom-module>
